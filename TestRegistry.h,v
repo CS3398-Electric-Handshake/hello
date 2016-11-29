@@ -1,0 +1,113 @@
+head	1.3;
+access;
+symbols
+	REL_1_5_4:1.2
+	initial:1.1.1.1
+	e-s:1.1.1;
+locks; strict;
+comment	@ * @;
+
+
+1.3
+date	2001.04.14.22.37.30;	author bastiaan;	state dead;
+branches;
+next	1.2;
+
+1.2
+date	2001.04.13.16.44.48;	author bastiaan;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.10.05.18.37.28;	author e-s;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2000.10.05.18.37.28;	author e-s;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.3
+log
+@Moved public header files from cppunit dir to include/cppunit, to separate them from internal header files like estring.h.
+@
+text
+@#ifndef CPPUNIT_TESTREGISTRY_H
+#define CPPUNIT_TESTREGISTRY_H
+
+
+#include <vector>
+#include <string>
+
+
+namespace CppUnit {
+
+  class Test;
+
+  /** This class is used to register tests and testcases.
+   *
+   *  It implements a registry to place the test cases into.
+   *  The test cases can then register themselves. 
+   *  All TestCallers and those TestCases that are constructed
+   *  register themselve automatically.
+   *  
+   */
+  class TestRegistry {
+    public:
+      static TestRegistry& getRegistry();
+      
+      ~TestRegistry();
+      
+      const std::vector<std::string>& getAllTestNames() const;
+      const std::vector<Test*>& getAllTests() const;
+      std::vector<Test*> getTest(const std::string& name) const;
+      void addTest(std::string name, Test* test);
+      
+    private:
+      TestRegistry();
+      
+  };
+  
+} // namespace CppUnit
+  
+#endif // CPPUNIT_TESTREGISTRY_H
+
+@
+
+
+1.2
+log
+@Merged patch #403542 by Tim Jansen <timj@@systembureau.com>.
+Fixes bug #220207: "const" problem with countTestCases.
+Fixes 'TestSuite::deleteContent() clear vector'
+Fixes 'Fix: TestCaller registered Fixture' (see patch #403541).
+Fixes bug #415219: example did not test anything.
+@
+text
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@d16 3
+a18 1
+   *  The test cases can then register themselves.
+@
+
+
+1.1.1.1
+log
+@initial check in.
+@
+text
+@@

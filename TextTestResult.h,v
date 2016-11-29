@@ -1,0 +1,70 @@
+head	1.2;
+access;
+symbols
+	REL_1_5_4:1.1;
+locks; strict;
+comment	@ * @;
+
+
+1.2
+date	2001.04.14.22.37.30;	author bastiaan;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2000.10.11.18.53.13;	author e-s;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.2
+log
+@Moved public header files from cppunit dir to include/cppunit, to separate them from internal header files like estring.h.
+@
+text
+@#ifndef CPPUNIT_TEXTTESTRESULT_H
+#define CPPUNIT_TEXTTESTRESULT_H
+
+#include <iosfwd>
+#include "TestResult.h"
+
+namespace CppUnit {
+
+  class Exception;
+  class Test;
+
+  class TextTestResult : public TestResult 
+  {
+    public:
+      virtual void        addError      (Test *test, Exception *e);
+      virtual void        addFailure    (Test *test, Exception *e);
+      virtual void        startTest     (Test *test);
+      virtual void        print         (std::ostream& stream);
+      virtual void        printErrors   (std::ostream& stream);
+      virtual void        printFailures (std::ostream& stream);
+      virtual void        printHeader   (std::ostream& stream);
+      
+  };
+
+  /** insertion operator for easy output */
+  std::ostream& operator<< (std::ostream& stream, TextTestResult& result);
+
+} // namespace CppUnit
+
+#endif // CPPUNIT_TEXTTESTRESULT_H
+
+
+@
+
+
+1.1
+log
+@added TextResult files.
+@
+text
+@@
+

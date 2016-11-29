@@ -1,0 +1,110 @@
+head	1.4;
+access;
+symbols
+	REL_1_5_4:1.1.1.1
+	initial:1.1.1.1
+	e-s:1.1.1;
+locks; strict;
+comment	@ * @;
+
+
+1.4
+date	2001.04.28.18.23.32;	author bastiaan;	state dead;
+branches;
+next	1.3;
+
+1.3
+date	2001.04.18.22.31.35;	author bastiaan;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2001.04.14.22.37.30;	author bastiaan;	state dead;
+branches;
+next	1.1;
+
+1.1
+date	2000.10.05.18.37.29;	author e-s;	state Exp;
+branches
+	1.1.1.1;
+next	;
+
+1.1.1.1
+date	2000.10.05.18.37.29;	author e-s;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.4
+log
+@Moved files in subdir cppunit to src/cppunit.
+@
+text
+@#ifndef CPPUNIT_ESTRING_H
+#define CPPUNIT_ESTRING_H
+
+
+#include <cstdio>
+
+namespace CppUnit {
+
+  /// Create a string from a const char pointer
+  inline std::string estring (const char *cstring)
+  { return std::string (cstring); }
+  
+  /// Create a string from a string (for uniformities' sake)
+  inline std::string estring (std::string& expandedString)
+  { return expandedString; }
+
+  /// Create a string from an int
+  inline std::string estring (int number)
+  { char buffer [50]; sprintf (buffer, "%d", number); return std::string (buffer); }
+
+  /// Create a string from a long
+  inline std::string estring (long number)
+  { char buffer [50]; sprintf (buffer, "%ld", number); return std::string (buffer); }
+
+  /// Create a string from a double
+  inline std::string estring (double number)
+  { char buffer [50]; sprintf (buffer, "%f", number); return std::string (buffer); }
+
+} // namespace CppUnit
+
+#endif // CPPUNIT_ESTRING_H
+@
+
+
+1.3
+log
+@Add mysteriously vanished estring.h.
+@
+text
+@@
+
+
+1.2
+log
+@Moved public header files from cppunit dir to include/cppunit, to separate them from internal header files like estring.h.
+@
+text
+@@
+
+
+1.1
+log
+@Initial revision
+@
+text
+@@
+
+
+1.1.1.1
+log
+@initial check in.
+@
+text
+@@

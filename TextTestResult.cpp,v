@@ -1,0 +1,340 @@
+head	1.9;
+access;
+symbols
+	REL_1_5_4:1.5;
+locks; strict;
+comment	@// @;
+
+
+1.9
+date	2001.04.28.18.23.32;	author bastiaan;	state dead;
+branches;
+next	1.8;
+
+1.8
+date	2001.04.15.23.45.04;	author bastiaan;	state Exp;
+branches;
+next	1.7;
+
+1.7
+date	2001.04.14.22.37.30;	author bastiaan;	state Exp;
+branches;
+next	1.6;
+
+1.6
+date	2001.04.14.21.42.44;	author bastiaan;	state Exp;
+branches;
+next	1.5;
+
+1.5
+date	2001.04.14.14.45.56;	author bastiaan;	state Exp;
+branches;
+next	1.4;
+
+1.4
+date	2001.04.14.00.47.34;	author bastiaan;	state Exp;
+branches;
+next	1.3;
+
+1.3
+date	2001.04.14.00.38.14;	author bastiaan;	state Exp;
+branches;
+next	1.2;
+
+1.2
+date	2000.10.13.19.25.46;	author e-s;	state Exp;
+branches;
+next	1.1;
+
+1.1
+date	2000.10.11.18.53.13;	author e-s;	state Exp;
+branches;
+next	;
+
+
+desc
+@@
+
+
+1.9
+log
+@Moved files in subdir cppunit to src/cppunit.
+@
+text
+@#include <iostream>
+#include "cppunit/TextTestResult.h"
+#include "cppunit/Exception.h"
+#include "cppunit/Test.h"
+#include "estring.h"
+
+namespace CppUnit {
+
+std::ostream& 
+CppUnit::operator<< (std::ostream& stream, TextTestResult& result)
+{ 
+  result.print (stream); return stream; 
+}
+
+void 
+TextTestResult::addError (Test *test, Exception *e)
+{
+    TestResult::addError (test, e);
+    std::cerr << "E" << std::endl;
+
+}
+
+void 
+TextTestResult::addFailure (Test *test, Exception *e)
+{
+    TestResult::addFailure (test, e);
+    std::cerr << "F" << std::endl;
+
+}
+
+void 
+TextTestResult::startTest (Test *test)
+{
+
+  std::cerr << "Running " << test->getName() << " ";
+  TestResult::startTest (test);
+  std::cerr << "." << std::endl;
+
+}
+
+
+void 
+TextTestResult::printErrors (std::ostream& stream)
+{
+    if (testErrors () != 0) {
+
+        if (testErrors () == 1)
+            stream << "There was " << testErrors () << " error: " << std::endl;
+        else
+            stream << "There were " << testErrors () << " errors: " << std::endl;
+
+        int i = 1;
+
+        for (std::vector<TestFailure *>::iterator it = errors ().begin (); it != errors ().end (); ++it) {
+            TestFailure             *failure    = *it;
+            Exception        *e          = failure->thrownException ();
+
+            stream << i 
+                   << ") "
+                   << "line: " << (e ? estring (e->lineNumber ()) : "") << " "
+                   << (e ? e->fileName () : "") << " "
+                   << "\"" << failure->thrownException ()->what () << "\""
+                   << std::endl;
+            i++;
+        }
+    }
+
+}
+
+void 
+TextTestResult::printFailures (std::ostream& stream) 
+{
+    if (testFailures () != 0) {
+        if (testFailures () == 1)
+            stream << "There was " << testFailures () << " failure: " << std::endl;
+        else
+            stream << "There were " << testFailures () << " failures: " << std::endl;
+
+        int i = 1;
+
+        for (std::vector<TestFailure *>::iterator it = failures ().begin (); it != failures ().end (); ++it) {
+            TestFailure             *failure    = *it;
+            Exception        *e          = failure->thrownException ();
+
+            stream << i 
+                   << ") "
+                   << "line: " << (e ? estring (e->lineNumber ()) : "") << " "
+                   << (e ? e->fileName () : "") << " "
+                   << "\"" << failure->thrownException ()->what () << "\""
+                   << std::endl;
+            i++;
+        }
+    }
+
+}
+
+
+void 
+TextTestResult::print (std::ostream& stream) 
+{
+    printHeader (stream);
+    printErrors (stream);
+    printFailures (stream);
+
+}
+
+
+void 
+TextTestResult::printHeader (std::ostream& stream)
+{
+    if (wasSuccessful ())
+        stream << std::endl << "OK (" << runTests () << " tests)" << std::endl;
+    else
+        stream << std::endl
+             << "!!!FAILURES!!!" << std::endl
+             << "Test Results:" << std::endl
+             << "Run:  "
+             << runTests ()
+             << "   Failures: "
+             << testFailures ()
+             << "   Errors: "
+             << testErrors ()
+             << std::endl;
+
+}
+
+} // namespace CppUnit
+@
+
+
+1.8
+log
+@Prefixed cout, cerr and endl with std::.
+@
+text
+@@
+
+
+1.7
+log
+@Moved public header files from cppunit dir to include/cppunit, to separate them from internal header files like estring.h.
+@
+text
+@d19 1
+a19 1
+    cerr << "E\n";
+d27 1
+a27 1
+    cerr << "F\n";
+d35 1
+a35 1
+  cerr << "Running " << test->getName() << " ";
+d37 1
+a37 1
+  cerr << ".\n";
+d43 1
+a43 1
+TextTestResult::printErrors (ostream& stream)
+d48 1
+a48 1
+            stream << "There was " << testErrors () << " error: " << endl;
+d50 1
+a50 1
+            stream << "There were " << testErrors () << " errors: " << endl;
+d63 1
+a63 1
+                   << endl;
+d71 1
+a71 1
+TextTestResult::printFailures (ostream& stream) 
+d75 1
+a75 1
+            stream << "There was " << testFailures () << " failure: " << endl;
+d77 1
+a77 1
+            stream << "There were " << testFailures () << " failures: " << endl;
+d90 1
+a90 1
+                   << endl;
+d99 1
+a99 1
+TextTestResult::print (ostream& stream) 
+d109 1
+a109 1
+TextTestResult::printHeader (ostream& stream)
+d112 1
+a112 1
+        stream << endl << "OK (" << runTests () << " tests)" << endl;
+d114 3
+a116 3
+        stream << endl
+             << "!!!FAILURES!!!" << endl
+             << "Test Results:" << endl
+d123 1
+a123 1
+             << endl;
+@
+
+
+1.6
+log
+@Always use namespace std for strings and vectors.
+@
+text
+@d2 3
+a4 2
+#include "TextTestResult.h"
+#include "Exception.h"
+a5 1
+#include "Test.h"
+@
+
+
+1.5
+log
+@Removed all 'using namespace' occurrences.
+@
+text
+@d54 1
+a54 1
+        for (vector<TestFailure *>::iterator it = errors ().begin (); it != errors ().end (); ++it) {
+d81 1
+a81 1
+        for (vector<TestFailure *>::iterator it = failures ().begin (); it != failures ().end (); ++it) {
+@
+
+
+1.4
+log
+@Fix bug #223290: cerr undefined.
+@
+text
+@d7 1
+a7 4
+using namespace std;
+using namespace CppUnit;
+
+
+d126 2
+@
+
+
+1.3
+log
+@Fix bug #232636: TextTestResult::printHeader(ostream& stream) outputs to cout.
+@
+text
+@d1 1
+@
+
+
+1.2
+log
+@changed output.
+@
+text
+@d114 1
+a114 1
+        cout << endl << "OK (" << runTests () << " tests)" << endl;
+d116 1
+a116 1
+        cout << endl
+@
+
+
+1.1
+log
+@added TextResult files.
+@
+text
+@d4 1
+d36 4
+a39 2
+    TestResult::startTest (test);
+    cerr << ".";
+@
+
