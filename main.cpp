@@ -1,11 +1,11 @@
 #include <iostream>
 
-#include <cppunit/TestRunner.h>
-#include <cppunit/TestResult.h>
-#include <cppunit/TestResultCollector.h>
-#include <cppunit/extensions/HelperMacros.h>
-#include <cppunit/BriefTestProgressListener.h>
-#include <cppunit/extensions/TestFactoryRegistry.h>
+#include <cppunit-1.12.1/include/cppunit/TestRunner.h>
+#include <cppunit-1.12.1/include/cppunit/TestResult.h>
+#include <cppunit-1.12.1/include/cppunit/TestResultCollector.h>
+#include <cppunit-1.12.1/include/cppunit/extensions/HelperMacros.h>
+#include <cppunit-1.12.1/include/cppunit/BriefTestProgressListener.h>
+#include <cppunit-1.12.1/include/cppunit/extensions/TestFactoryRegistry.h>
 
 class Test : public CPPUNIT_NS::TestCase
 {
